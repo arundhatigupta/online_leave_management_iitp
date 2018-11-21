@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}OLM IIT Patna{% endblock %}</title>
+
+    <!-- Loads the path to static files -->
+    <link rel="stylesheet" href='{%static "css/bootstrap.min.css" %}'/>
+    <link href='{%static "fonts/satisfy.css" %}' rel="stylesheet" type="text/css"/>
+    <script src='{%static "js/jquery.min.js" %}'></script>
+    <script src='{%static "js/popper.min.js" %}'></script>
+    <script src='{%static "js/bootstrap.min.js" %}'></script>
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <a class="navbar-brand" href="{% url 'app:index' %}">OLM IIT Patna</a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">
+            {% block items %}
+            {% endblock %}
+        </div>
+    </nav>
+    <br>
+          
+{% block body %}
+{% endblock %}
+</body>
+</html>

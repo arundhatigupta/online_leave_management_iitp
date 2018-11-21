@@ -1,0 +1,33 @@
+{% extends 'app/base.html' %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12 col-md-7">
+                <h3>
+                    {% if can_edit %}
+                        Pending
+                    {% else %}
+                        Past
+                    {% endif %}
+                    Leaves
+                </h3>
+                {% for leave in leaves %}
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">{{ leave.date_of_leaving }} - {{ leave.date_of_returning }}</h4>
+                            <p class="card-text">
+                                {{ leave.reason_for_leave }}
+                                {{ leave.going_to_place }}
+                            </p>
+                            {% if user.is_authenticated and can_edit %}
+                                <a class="btn btn-primary" href="{% url 'app:leave_edit' pk=leave.pk %}"><span class="glyphicon glyphicon-pencil"> Edit </span></a>
+                            {% endif %}
+                            <a class="btn btn-primary" href="{% url 'app:leave_detail' pk=leave.pk %}"><span class="glyphicon glyphicon-pencil"> Details </span></a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

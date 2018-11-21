@@ -1,0 +1,30 @@
+{% extends 'app/base.html' %}
+
+{% block body %}
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">{{ leave.date_of_leaving }} - {{ leave.date_of_returning }}</h4>
+            <p class="card-text">
+                {{ leave.reason_for_leave }}
+                {{ leave.going_to_place }}
+            </p>
+            {% if user.is_authenticated and can_edit %}
+                <a class="btn btn-primary" href="{% url 'app:leave_edit' pk=leave.pk %}"><span class="glyphicon glyphicon-pencil"> Edit </span></a>
+            {% endif %}
+            {% if user.is_authenticated and can_approve %}
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="leave_status">Status</label>
+                        <select class="form-control" value="{{ leave.leave_status }}" id="leave_status" name="leave_status">
+                            <option value="PEN">Pending</option>
+                            <option value="APP">Approved</option>
+                            <option value="REJ">Rejected</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

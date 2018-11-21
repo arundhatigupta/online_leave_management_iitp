@@ -1,0 +1,25 @@
+{% extends 'app/profile.html' %}
+{% block form %}
+<div class="col-md-9">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Dashboard</h4>
+                    <hr>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <form>
+                        <ul>
+                            <li><a href="{% url 'app:leaves-pending' %}">Pending approvals</a></li>
+                            <li><a href="{% url 'app:leaves-past' %}">Past approvals</a></li>
+                        </ul>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

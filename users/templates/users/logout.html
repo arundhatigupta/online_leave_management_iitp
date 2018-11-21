@@ -1,0 +1,24 @@
+{% extends 'app/index.html' %}
+{% include 'auth' %}
+{% block body %}
+    <div class="wrapper">
+        <div class="container">
+            <h3>You have been successfully logged out!</h3>
+            <h3>Thank you for using the Online Leave Management System - IIT Patna.</h3>
+            <a href="{% url 'users:login' %}"><b>Go to login</b></a>
+        </div>
+
+        <ul class="bg-bubbles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+{% endblock %}

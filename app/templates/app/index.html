@@ -1,0 +1,31 @@
+{% extends 'app/base.html' %}
+{% include 'auth' %}
+{% load static %}
+{% block extra_head %}
+    <link rel="stylesheet" href='{% static "css/codepen.css" %}'/>
+{% endblock %}
+{% block body %}
+    <div class="wrapper">
+        <div class="container">
+            <h2>Welcome to OLM IIT Patna</h2>
+            <form class="form" action="{% url 'users:login' %}">
+                <button id="student_button" type="submit"><b>I am a Student</b></button>
+                <br><br>
+                <button id="authority_button" type="submit"><b>I am an Authority</b></button>
+            </form>
+        </div>
+
+        <ul class="bg-bubbles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+{% endblock %}

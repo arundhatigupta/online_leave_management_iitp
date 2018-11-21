@@ -1,0 +1,36 @@
+{% extends 'app/index.html' %}
+{% include 'auth' %}
+{% block body %}
+    <div class="wrapper">
+        <div class="container">
+            <h2>Welcome to OLM IIT Patna</h2>
+            <form method="post" class="form">
+                {% csrf_token %}
+                <input id="username" name="username" type="text" placeholder="Username"/>
+                <input id="password" name="password" type="password" placeholder="Password"/>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+
+        <ul class="bg-bubbles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+    <script>
+        $("#login-button").click(function (event) {
+            event.preventDefault();
+
+            $('form').fadeOut(500);
+            $('.wrapper').addClass('form-success');
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'app/base.html' %}
+{% block items %}
+    <ul class="navbar-nav nav justify-content-end">
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'users:logout' %}">
+                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>&nbsp; Logout
+            </a>
+        </li>
+    </ul>
+{% endblock %}
+{% block body %}
+    <style>
+        #profile {
+            display: none;
+        }
+
+        #dashboard {
+            display: none;
+        }
+    </style>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 ">
+                <div class="list-group ">
+                    <a href="{% url 'app:dashboard' %}"
+                       class="list-group-item list-group-item-action">Dashboard</a>
+                    <a href="{% url 'app:profile' %}"
+                        class="list-group-item list-group-item-action">Profile</a>
+                    <a href="{% url 'app:change-password' %}"
+                       class="list-group-item list-group-item-action">Change Password</a>
+                </div>
+            </div>
+            {% block form %}{% endblock %}
+        </div>
+    </div>
+{% endblock %}
