@@ -7,9 +7,11 @@ import enum
 # model for leave
 from django.urls import reverse
 
+
 class PlaceType(enum.Enum):
     NAT = 'Native'
     OTH = 'Other'
+
 
 class LeaveStatusType(enum.Enum):
     PEN = 'Pending'
@@ -39,6 +41,7 @@ class Leave(models.Model):
     # TODO: Add support for uploading supporting docs
     # supporting_documents = models.FileField()
 
+
 class LeaveApprovingFaculty(models.Model):
     batch = models.IntegerField()
     program = models.CharField(max_length=5,
@@ -49,6 +52,7 @@ class LeaveApprovingFaculty(models.Model):
                                            DisciplineType],
                                   default=DisciplineType.CSE.name)
     authority = models.OneToOneField('users.ApprovingAuthority', related_name='faculty', on_delete=CASCADE, null=True)
+
 
 class LeaveApprovingWarden(models.Model):
     batch = models.IntegerField()
