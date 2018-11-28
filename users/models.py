@@ -74,8 +74,8 @@ class UserAccount(models.Model):
 
 class Student(models.Model):
     roll_number = models.CharField(max_length=10)
-    year_of_joining = models.IntegerField()
-    current_year = models.IntegerField()
+    year_of_joining = models.IntegerField(default=0)
+    current_year = models.IntegerField(default=0)
     program = models.CharField(max_length=5,
                                choices=[(program_type.name, program_type.value) for program_type in ProgramType],
                                default=ProgramType.BTC.name)
@@ -90,7 +90,7 @@ class Student(models.Model):
                               choices=[(hostel_type.name, hostel_type.value) for hostel_type in HostelType],
                               default=HostelType.BH.name)
     block = models.CharField(max_length=1)
-    room_number = models.IntegerField()
+    room_number = models.IntegerField(default=0)
     user_account = models.OneToOneField(UserAccount, related_name='student', on_delete=CASCADE, null=True)
 
     def __str__(self):

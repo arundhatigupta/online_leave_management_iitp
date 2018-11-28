@@ -4,7 +4,7 @@
     <div class="wrapper">
         <div class="container">
             <h2>Sign Up for OLM IIT Patna</h2>
-            <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+            <form class="form-horizontal" action="" method="post" enctype="multipart/form-data" novalidate>
                 {% csrf_token %}
                 {{ form.as_p }}
                 <div class="form-group">
@@ -29,11 +29,17 @@
         </ul>
     </div>
     <script>
-        $("#login-button").click(function (event) {
-            event.preventDefault();
-
-            $('form').fadeOut(500);
-            $('.wrapper').addClass('form-success');
+        const empIdField = document.getElementById('id_emp_id');
+        const rollNumberField = document.getElementById('id_roll_number');
+        empIdField.style.display = 'none';
+        $('select').on('change', function () {
+            if (this.value === 'S') {
+                empIdField.style.display = 'none';
+                rollNumberField.style.display = 'block';
+            } else {
+                empIdField.style.display = 'block';
+                rollNumberField.style.display = 'none';
+            }
         });
     </script>
 {% endblock %}

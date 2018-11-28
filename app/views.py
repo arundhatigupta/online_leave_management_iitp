@@ -5,6 +5,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 from app.forms import *
 from app.models import Leave, LeaveApprovingWarden, LeaveApprovingFaculty
 
+
 def index(request):
     if request.user.is_authenticated:
         return redirect('app:dashboard')
@@ -89,7 +90,9 @@ def leave_create(request):
             date_of_returning=request.POST.get('date_of_returning', ''),
         )
         leave.student = request.user.user_account.student
-        leave.faculty = LeaveApprovingFaculty.objects.filter(batch=student.year_of_joining).filter(program=student.program).filter(discipline=student.discipline)[0]
+        leave.faculty = \
+        LeaveApprovingFaculty.objects.filter(batch=student.year_of_joining).filter(program=student.program).filter(
+            discipline=student.discipline)[0]
         leave.warden = LeaveApprovingWarden.objects.filter(batch=student.year_of_joining).filter(
             hostel=student.hostel)[0]
         leave.save()
@@ -120,7 +123,7 @@ def leave_edit(request, pk):
         return redirect('app:leave_detail', pk=leave.pk)
     else:
         user_account = request.user.user_account
-        if user_account.user_type  == 'AA':
+        if user_account.user_type == 'AA':
             if user_account.authority.role == 'FAD':
                 form = LeaveForm(leave.__dict__, can_approve=True)
             else:
