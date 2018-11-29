@@ -29,7 +29,14 @@ def signup(request):
             if user_type == 'S':
                 print(request.POST)
                 roll_number = request.POST.get('roll_number')
-                student = Student.objects.create(user_account=user_account, roll_number=roll_number)
+                year_of_joining = request.POST.get('year_of_joining')
+                program = request.POST.get('program_type')
+                discipline = request.POST.get('discipline_type')
+                gender = request.POST.get('gender_type')
+                hostel = request.POST.get('hostel_type')
+                student = Student.objects.create(user_account=user_account, roll_number=roll_number,
+                                                 year_of_joining=year_of_joining, program=program,
+                                                 discipline=discipline, gender=gender, hostel=hostel)
                 student.save()
             else:
                 emp_id = request.POST.get('emp_id')

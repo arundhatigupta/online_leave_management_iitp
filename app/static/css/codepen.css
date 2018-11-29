@@ -48,7 +48,7 @@ body :-ms-input-placeholder {
     background: -webkit-linear-gradient(top left, #50a3a2 0%, #53e3a6 100%);
     background: linear-gradient(to bottom right, #50a3a2 0%, #53e3a6 100%);
     width: 100%;
-    height: 100vh;
+    height: 200vh;
     overflow: hidden;
 }
 
@@ -60,7 +60,7 @@ body :-ms-input-placeholder {
 .container {
     max-width: 600px;
     padding: 80px 0;
-    height: 100vh;
+    height: 200vh;
     text-align: center;
     overflow: hidden;
 }

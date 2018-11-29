@@ -31,14 +31,29 @@
     <script>
         const empIdField = document.getElementById('id_emp_id');
         const rollNumberField = document.getElementById('id_roll_number');
+        const yearOfJoiningField = document.getElementById('id_year_of_joining');
+        const programField = document.getElementById('id_program_type');
+        const disciplineField = document.getElementById('id_discipline_type');
+        const genderField = document.getElementById('id_gender_type');
+        const hostelField = document.getElementById('id_hostel_type');
         empIdField.style.display = 'none';
         $('select').on('change', function () {
             if (this.value === 'S') {
                 empIdField.style.display = 'none';
                 rollNumberField.style.display = 'block';
-            } else {
+                yearOfJoiningField.style.display = 'block';
+                programField.style.display = 'block';
+                disciplineField.style.display = 'block';
+                genderField.style.display = 'block';
+                hostelField.style.display = 'block';
+            } else if (this.value === 'AA') {
                 empIdField.style.display = 'block';
                 rollNumberField.style.display = 'none';
+                yearOfJoiningField.style.display = 'none';
+                programField.style.display = 'none';
+                disciplineField.style.display = 'none';
+                genderField.style.display = 'none';
+                hostelField.style.display = 'none';
             }
         });
     </script>

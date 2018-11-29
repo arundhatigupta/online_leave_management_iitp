@@ -32,9 +32,7 @@ def profile(request):
                 student.block = request.POST.get('block', '')
                 student.room_number = request.POST.get('room_number', '')
                 student.save()
-
             return render(request, 'app/student_profile.html', context)
-
 
         elif user_account.user_type == 'AA':
             authority = user_account.authority
