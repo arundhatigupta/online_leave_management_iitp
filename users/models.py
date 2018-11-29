@@ -74,8 +74,8 @@ class UserAccount(models.Model):
 
 class Student(models.Model):
     roll_number = models.CharField(max_length=10)
-    year_of_joining = models.IntegerField(default=0)
-    current_year = models.IntegerField(default=0)
+    year_of_joining = models.IntegerField(default=2000)
+    current_year = models.IntegerField(default=1)
     program = models.CharField(max_length=5,
                                choices=[(program_type.name, program_type.value) for program_type in ProgramType],
                                default=ProgramType.BTC.name)
