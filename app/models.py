@@ -55,7 +55,6 @@ class LeaveApprovingFaculty(models.Model):
 
 
 class LeaveApprovingWarden(models.Model):
-    batch = models.IntegerField()
     hostel = models.CharField(max_length=2,
                               choices=[(hostel_type.name, hostel_type.value) for hostel_type in HostelType],
                               default=HostelType.BH.name)

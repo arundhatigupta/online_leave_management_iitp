@@ -91,8 +91,7 @@ def leave_create(request):
         leave.faculty = \
         LeaveApprovingFaculty.objects.filter(batch=student.year_of_joining).filter(program=student.program).filter(
             discipline=student.discipline)[0]
-        leave.warden = LeaveApprovingWarden.objects.filter(batch=student.year_of_joining).filter(
-            hostel=student.hostel)[0]
+        leave.warden = LeaveApprovingWarden.objects.filter(hostel=student.hostel)[0]
         leave.save()
         return redirect('app:leave_detail', pk=leave.pk)
     else:
@@ -134,7 +133,7 @@ def leave_edit(request, pk):
 def leaves_pending(request):
     user_account = request.user.user_account
     if user_account.user_type == 'S':
-        leaves = Leave.objects.filter(student=user_account.student).filter(leave_status="PEN")
+        leaves = Leave.objects.filter(student=user_account.student).exclude(leave_status="APPW")
         return render(request, 'app/leaves_list.html', {'leaves': leaves, 'can_edit': True})
     else:
         authority_type = user_account.authority.role
@@ -148,7 +147,7 @@ def leaves_pending(request):
 def leaves_past(request):
     user_account = request.user.user_account
     if user_account.user_type == 'S':
-        leaves = Leave.objects.filter(student=user_account.student).exclude(leave_status="PEN")
+        leaves = Leave.objects.filter(student=user_account.student).filter(leave_status="APPW")
         return render(request, 'app/leaves_list.html', {'leaves': leaves, 'can_edit': False})
     else:
         authority_type = user_account.authority.role
