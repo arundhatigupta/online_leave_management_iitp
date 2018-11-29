@@ -2,6 +2,7 @@ from django.conf.urls import url
 from django.urls import path
 from django.views.generic import TemplateView
 
+from online_leave_management_iitp import settings
 from . import views
 
 app_name = 'app'
@@ -17,3 +18,6 @@ urlpatterns = [
     path('leaves/past/', views.leaves_past, name='leaves-past'),
     path('leave/<int:pk>/edit/', views.leave_edit, name='leave_edit'),
 ]
+if not settings.DEBUG:
+    urlpatterns += path('', (r'^static/(?P<path>.*)$', 'django.views.static.serve',
+                                 {'document_root': settings.STATIC_ROOT}), )
