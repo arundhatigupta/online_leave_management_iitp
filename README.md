@@ -2,6 +2,8 @@
 
 An online leave management system for the students of IIT Patna. The students as well as the authorities can use this system to prevent the paper work that is needed whenever a student needs to get his/her leave approved.
 
+Check out the project [here](https://olmiitp.herokuapp.com).
+
 ### Features
 - User accounts for students as well as authorities
 - Students can apply for a leave as well as see pending (not approved yet) and past leaves (approved)
