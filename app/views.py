@@ -214,27 +214,27 @@ def leave_edit(request, pk):
 def leaves_pending(request):
     user_account = request.user.user_account
     if user_account.user_type == 'S':
-        leaves = Leave.objects.filter(student=user_account.student).exclude(leave_status="APPW")
+        leaves = Leave.objects.filter(student=user_account.student).exclude(leave_status="APPW").order_by("-pk")
         return render(request, 'app/leaves_list.html', {'leaves': leaves, 'can_edit': True, 'can_approve': False})
     else:
         authority_type = user_account.authority.role
         if authority_type == 'FAD':
-            leaves = Leave.objects.filter(faculty=user_account.authority.faculty).filter(leave_status="PEN")
+            leaves = Leave.objects.filter(faculty=user_account.authority.faculty).filter(leave_status="PEN").order_by("-pk")
         else:
-            leaves = Leave.objects.filter(warden=user_account.authority.warden).filter(leave_status="APPF")
+            leaves = Leave.objects.filter(warden=user_account.authority.warden).filter(leave_status="APPF").order_by("-pk")
         return render(request, 'app/leaves_list.html', {'leaves': leaves, 'can_edit': True, 'can_approve': True})
 
 
 def leaves_past(request):
     user_account = request.user.user_account
     if user_account.user_type == 'S':
-        leaves = Leave.objects.filter(student=user_account.student).filter(leave_status="APPW")
+        leaves = Leave.objects.filter(student=user_account.student).filter(leave_status="APPW").order_by("-pk")
         return render(request, 'app/leaves_list.html', {'leaves': leaves, 'can_edit': False})
     else:
         authority_type = user_account.authority.role
         if authority_type == 'FAD':
-            leaves = Leave.objects.filter(faculty=user_account.authority.faculty).exclude(leave_status="PEN")
+            leaves = Leave.objects.filter(faculty=user_account.authority.faculty).exclude(leave_status="PEN").order_by("-pk")
         else:
             leaves = Leave.objects.filter(warden=user_account.authority.warden).exclude(
-                leave_status="PEN").exclude(leave_status="APPF")
+                leave_status="PEN").exclude(leave_status="APPF").order_by("-pk")
         return render(request, 'app/leaves_list.html', {'leaves': leaves, 'can_edit': False})
