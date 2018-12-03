@@ -19,7 +19,42 @@ def profile(request):
 
         if user_account.user_type == 'S':
             student = user_account.student
-            context = {'student': student}
+            program_type = {
+                'BTC': 'Bachelor of Technology',
+                'MTC': 'Master of Technology',
+                'MSC': 'Master of Science',
+                'PHD': 'Doctorate of Philosophy',
+                'OTH': 'Other',
+            }
+            discipline_type = {
+                'CSE': 'Computer Science and Engineering',
+                'EE': 'Electrical Engineering',
+                'CEE': 'Civil and Environmental Engineering',
+                'CBE': 'Chemical and Biochemical Engineering',
+                'ME': 'Mechanical Engineering',
+                'MME': 'Metallurgical and Materials Engineering',
+                'MSE': 'Material Science and Engineering',
+                'CHEM': 'Chemistry',
+                'MATHS': 'Mathematics',
+                'PHY': 'Physics',
+                'HSS': 'Humanities and Social Sciences',
+                'MNC': 'Mathematics and Computing',
+                'MT': 'Mechatronics',
+                'NT': 'Nanoscience and Technology',
+                'CM': 'Communication System engineering',
+                'OTH': 'Other',
+            }
+            gender_type = {
+                'M': 'Male',
+                'F': 'Female',
+                'O': 'Other',
+            }
+            hostel_type = {
+                'GH': 'Girls Hostel',
+                'BH': 'Boys Hostel',
+            }
+            context = {'student': student, 'program_type': program_type, 'discipline_type': discipline_type,
+                       'gender_type': gender_type, 'hostel_type': hostel_type}
 
             if request.method == 'POST':
                 user.first_name = request.POST.get('first_name', '')
@@ -35,8 +70,21 @@ def profile(request):
             return render(request, 'app/student_profile.html', context)
 
         elif user_account.user_type == 'AA':
+            designation_type = {
+                'ASIP': 'Assistant Professor',
+                'ASOP': 'Associate Professor',
+                'PROF': 'Professor',
+                'OTH': 'Other',
+            }
+            role_type = {
+                'FAD': 'Faculty Advisor',
+                'GHW': 'Warden - Girls Hostel',
+                'BHW': 'Warden - Boys Hostel',
+                'SUP': 'Supervisor',
+                'OTH': 'Other',
+            }
             authority = user_account.authority
-            context = {'authority': authority}
+            context = {'authority': authority, 'designation_type': designation_type, 'role_type': role_type}
 
             if request.method == 'POST':
                 user.first_name = request.POST.get('first_name', '')
@@ -113,15 +161,28 @@ def leave_detail(request, pk):
         leave.save()
         return redirect('app:dashboard')
     else:
+        leave_status_values = {
+            'PEN': 'Pending',
+            'APPF': 'Approved by Faculty',
+            'APPW': 'Approved by Warden',
+            'REJ': "Rejected",
+        }
+        hostel_type = {
+            'GH': 'Girls Hostel',
+            'BH': 'Boys Hostel',
+        }
         if user_account.user_type == 'S':
-            return render(request, 'app/leave_detail.html', {'leave': leave, 'can_edit': True, 'can_approve': False})
+            return render(request, 'app/leave_detail.html', {'leave': leave, 'can_edit': True, 'can_approve': False,
+                                                             'leave_status_values': leave_status_values, 'hostel_type': hostel_type})
         else:
             if user_account.authority.role == 'FAD':
                 return render(request, 'app/leave_detail.html',
-                              {'leave': leave, 'can_edit': False, 'can_approve': True, 'is_warden': False})
+                              {'leave': leave, 'can_edit': False, 'can_approve': True, 'is_warden': False,
+                               'leave_status_values': leave_status_values, 'hostel_type': hostel_type})
             else:
                 return render(request, 'app/leave_detail.html',
-                              {'leave': leave, 'can_edit': False, 'can_approve': True, 'is_warden': True})
+                              {'leave': leave, 'can_edit': False, 'can_approve': True, 'is_warden': True,
+                               'leave_status_values': leave_status_values, 'hostel_type': hostel_type})
 
 
 def leave_edit(request, pk):

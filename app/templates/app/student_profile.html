@@ -8,122 +8,122 @@
                         <h4>Your profile</h4>
                         <hr>
                     </div>
-                </div>            
+                </div>
                 <div class="row">
-        <div class="col-md-12">
-            <form method="post">
-                {% csrf_token %}
-                <div class="form-group row">
-                    <label for="username" class="col-4 col-form-label">User Name*</label>
-                    <div class="col-8">
-                        <input id="username" name="username" placeholder="Username"
-                                class="form-control here" required="required" type="text"
-                                value="{{ user.username }}" disabled>
+                    <div class="col-md-12">
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="form-group row">
+                                <label for="username" class="col-4 col-form-label">User Name*</label>
+                                <div class="col-8">
+                                    <input id="username" name="username" placeholder="Username"
+                                           class="form-control here" required="required" type="text"
+                                           value="{{ user.username }}" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="first_name" class="col-4 col-form-label">First Name</label>
+                                <div class="col-8">
+                                    <input id="first_name" name="first_name" placeholder="First Name"
+                                           value="{{ user.first_name }}"
+                                           class="form-control here" type="text">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="last_name" class="col-4 col-form-label">Last Name</label>
+                                <div class="col-8">
+                                    <input id="last_name" name="last_name" placeholder="Last Name"
+                                           value="{{ user.last_name }}"
+                                           class="form-control here" type="text">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="roll_number" class="col-4 col-form-label">Roll Number</label>
+                                <div class="col-8">
+                                    <input id="roll_number" name="roll_number" placeholder="Roll Number"
+                                           value="{{ student.roll_number }}"
+                                           class="form-control here" type="text" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="year_of_joining" class="col-4 col-form-label">Year of
+                                    Joining</label>
+                                <div class="col-8">
+                                    <input id="year_of_joining" name="year_of_joining"
+                                           placeholder="Year of Joining"
+                                           value="{{ student.year_of_joining }}"
+                                           class="form-control here" type="text" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="current_year" class="col-4 col-form-label">Current Year of
+                                    Study</label>
+                                <div class="col-8">
+                                    <input id="current_year" name="current_year" placeholder="Current Year"
+                                           value="{{ student.current_year }}"
+                                           class="form-control here" type="text">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="program" class="col-4 col-form-label">Program</label>
+                                <div class="col-8">
+                                    <input id="program" name="program" placeholder="Program"
+                                           value="{% for k, v in program_type.items %}{% if k == student.program %}{{ v }}{% endif %}{% endfor %}"
+                                           class="form-control here" type="text" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="discipline" class="col-4 col-form-label">Discipline</label>
+                                <div class="col-8">
+                                    <input id="discipline" name="discipline" placeholder="Discipline"
+                                           value="{% for k, v in discipline_type.items %}{% if k == student.discipline %}{{ v }}{% endif %}{% endfor %}"
+                                           class="form-control here" type="text" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="gender" class="col-4 col-form-label">Gender</label>
+                                <div class="col-8">
+                                    <input id="gender" name="gender" placeholder="Gender"
+                                           value="{% for k, v in gender_type.items %}{% if k == student.gender %}{{ v }}{% endif %}{% endfor %}"
+                                           class="form-control here" type="text" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="hostel" class="col-4 col-form-label">Hostel</label>
+                                <div class="col-8">
+                                    <input id="hostel" name="hostel" placeholder="Hostel"
+                                           value="{% for k, v in hostel_type.items %}{% if k == student.hostel %}{{ v }}{% endif %}{% endfor %}"
+                                           class="form-control here" type="text">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="block" class="col-4 col-form-label">Block</label>
+                                <div class="col-8">
+                                    <input id="block" name="block" placeholder="Block"
+                                           value="{{ student.block }}"
+                                           class="form-control here" type="text">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="room_number" class="col-4 col-form-label">Room Number</label>
+                                <div class="col-8">
+                                    <input id="room_number" name="room_number" placeholder="Room Number"
+                                           value="{{ student.room_number }}"
+                                           class="form-control here" type="text">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="offset-4 col-8">
+                                    <button name="submit" type="submit" class="btn btn-primary">Update
+                                        My
+                                        Profile
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                </div>
-                <div class="form-group row">
-                    <label for="first_name" class="col-4 col-form-label">First Name</label>
-                    <div class="col-8">
-                        <input id="first_name" name="first_name" placeholder="First Name"
-                                value="{{ user.first_name }}"
-                                class="form-control here" type="text">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="last_name" class="col-4 col-form-label">Last Name</label>
-                    <div class="col-8">
-                        <input id="last_name" name="last_name" placeholder="Last Name"
-                                value="{{ user.last_name }}"
-                                class="form-control here" type="text">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="roll_number" class="col-4 col-form-label">Roll Number</label>
-                    <div class="col-8">
-                        <input id="roll_number" name="roll_number" placeholder="Roll Number"
-                                value="{{ student.roll_number }}"
-                                class="form-control here" type="text" disabled>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="year_of_joining" class="col-4 col-form-label">Year of
-                        Joining</label>
-                    <div class="col-8">
-                        <input id="year_of_joining" name="year_of_joining"
-                                placeholder="Year of Joining"
-                                value="{{ student.year_of_joining }}"
-                                class="form-control here" type="text" disabled>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="current_year" class="col-4 col-form-label">Current Year of
-                        Study</label>
-                    <div class="col-8">
-                        <input id="current_year" name="current_year" placeholder="Current Year"
-                                value="{{ student.current_year }}"
-                                class="form-control here" type="text">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="program" class="col-4 col-form-label">Program</label>
-                    <div class="col-8">
-                        <input id="program" name="program" placeholder="Program"
-                                value="{{ student.program }}"
-                                class="form-control here" type="text" disabled>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="discipline" class="col-4 col-form-label">Discipline</label>
-                    <div class="col-8">
-                        <input id="discipline" name="discipline" placeholder="Discipline"
-                                value="{{ student.discipline }}"
-                                class="form-control here" type="text" disabled>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="gender" class="col-4 col-form-label">Gender</label>
-                    <div class="col-8">
-                        <input id="gender" name="gender" placeholder="Gender"
-                                value="{{ student.gender }}"
-                                class="form-control here" type="text" disabled>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="hostel" class="col-4 col-form-label">Hostel</label>
-                    <div class="col-8">
-                        <input id="hostel" name="hostel" placeholder="Hostel"
-                                value="{{ student.hostel }}"
-                                class="form-control here" type="text">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="block" class="col-4 col-form-label">Block</label>
-                    <div class="col-8">
-                        <input id="block" name="block" placeholder="Block"
-                                value="{{ student.block }}"
-                                class="form-control here" type="text">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="room_number" class="col-4 col-form-label">Room Number</label>
-                    <div class="col-8">
-                        <input id="room_number" name="room_number" placeholder="Room Number"
-                                value="{{ student.room_number }}"
-                                class="form-control here" type="text">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <div class="offset-4 col-8">
-                        <button name="submit" type="submit" class="btn btn-primary">Update
-                            My
-                            Profile
-                        </button>
-                    </div>
-                </div>
-            </form>
-        </div>
                 </div>
             </div>
-        </div>              
+        </div>
     </div>
 {% endblock %}

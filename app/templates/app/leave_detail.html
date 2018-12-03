@@ -11,17 +11,17 @@
                 <li><b>Going To: </b>{{ leave.going_to_place }}</li>
                 <li><b>Date of Leaving: </b>{{ leave.date_of_leaving }}</li>
                 <li><b>Date of Returning: </b>{{ leave.date_of_returning }}</li>
-                <li><b>Hostel: </b>{{ leave.student.hostel }}</li>
+                <li><b>Hostel: </b>{% for k, v in hostel_type.items %}{% if k == leave.student.hostel %}{{ v }}{% endif %}{% endfor %}</li>
                 <li><b>Room Number: </b>{{ leave.student.block }}-{{ leave.student.room_number }}</li>
             </ul>
             </p>
             {% if user.is_authenticated and not can_approve and leave.leave_status != 'PEN' %}
-                <ul><li><b>Leave Status: </b>{{ leave.leave_status }}</li></ul>
+                <ul><li><b>Leave Status: </b>{% for k, v in leave_status_values.items %}{% if k == leave.leave_status %}{{ v }}{% endif %}{% endfor %}</li></ul>
             {% else %}
-                {% if user.is_authenticated %}
+                {% if user.is_authenticated and can_approve %}
                     {% if not is_warden %}
                         {% if leave.leave_status != 'PEN' %}
-                            <ul><li><b>Leave Status: </b>{{ leave.leave_status }}</li></ul>
+                            <ul><li><b>Leave Status: </b>{% for k, v in leave_status_values.items %}{% if k == leave.leave_status %}{{ v }}{% endif %}{% endfor %}</li></ul>
                         {% else %}
                             <form method="POST">
                                 {% csrf_token %}
@@ -35,7 +35,7 @@
                         {% endif %}
                     {% else %}
                         {% if leave.leave_status != 'APPF' %}
-                            <ul><li><b>Leave Status: </b>{{ leave.leave_status }}</li></ul>
+                            <ul><li><b>Leave Status: </b>{% for k, v in leave_status_values.items %}{% if k == leave.leave_status %}{{ v }}{% endif %}{% endfor %}</li></ul>
                         {% else %}
                             <form method="POST">
                                 {% csrf_token %}

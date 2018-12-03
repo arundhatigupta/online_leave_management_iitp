@@ -49,7 +49,7 @@
                                 <label for="designation" class="col-4 col-form-label">Designation</label>
                                 <div class="col-8">
                                     <input id="designation" name="designation"
-                                           placeholder="Designation" value="{{ authority.designation }}"
+                                           placeholder="Designation" value="{% for k, v in designation_type.items %}{% if k == authority.designation %}{{ v }}{% endif %}{% endfor %}"
                                            class="form-control here" type="text">
                                 </div>
                             </div>
@@ -57,7 +57,7 @@
                                 <label for="role" class="col-4 col-form-label">Role</label>
                                 <div class="col-8">
                                     <input id="role" name="role"
-                                           placeholder="Role" value="{{ authority.role }}"
+                                           placeholder="Role" value="{% for k, v in role_type.items %}{% if k == authority.role %}{{ v }}{% endif %}{% endfor %}"
                                            class="form-control here" type="text" disabled>
                                 </div>
                             </div>
