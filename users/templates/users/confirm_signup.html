@@ -1,0 +1,23 @@
+{% extends 'app/index.html' %}
+{% block body %}
+    <div class="wrapper">
+        <div class="container">
+            <h3>Your account has been created</h3>
+            <h3>Sign in to continue.</h3>
+            <a href="{% url 'users:login' %}"><b>Go to login</b></a>
+        </div>
+
+        <ul class="bg-bubbles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+{% endblock %}

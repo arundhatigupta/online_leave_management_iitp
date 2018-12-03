@@ -43,9 +43,13 @@ def signup(request):
                 authority = ApprovingAuthority.objects.create(user_account=user_account, emp_id=emp_id)
                 authority.save()
             authenticate(username=username, password=password)
-            return redirect('users:login')
+            return redirect('users:confirm-signup')
         else:
-            return redirect('users:signup')
+            return redirect('users:login')
     else:
         form = SignUpForm()
     return render(request, 'users/signup.html', {'form': form})
+
+
+def confirm_signup(request):
+    return render(request, 'users/confirm_signup.html', {})
