@@ -3,18 +3,25 @@
 {% block body %}
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">{{ leave.date_of_leaving }} - {{ leave.date_of_returning }}</h4>
+            <h4 class="card-title">{{ leave.student.user_account.user.first_name }} {{ leave.student.user_account.user.last_name }}
+                - {{ leave.student.roll_number }}</h4>
             <p class="card-text">
-                {{ leave.reason_for_leave }}
-                {{ leave.going_to_place }}
+            <ul>
+                <li><b>Reason for Leave: </b>{{ leave.reason_for_leave }}</li>
+                <li><b>Going To: </b>{{ leave.going_to_place }}</li>
+                <li><b>Date of Leaving: </b>{{ leave.date_of_leaving }}</li>
+                <li><b>Date of Returning: </b>{{ leave.date_of_returning }}</li>
+                <li><b>Hostel: </b>{{ leave.student.hostel }}</li>
+                <li><b>Room Number: </b>{{ leave.student.block }}-{{ leave.student.room_number }}</li>
+            </ul>
             </p>
-            {% if user.is_authenticated and not can_approve %}
-                <p>Leave Status: </p>{{ leave.leave_status }}
+            {% if user.is_authenticated and not can_approve and leave.leave_status != 'PEN' %}
+                <ul><li><b>Leave Status: </b>{{ leave.leave_status }}</li></ul>
             {% else %}
                 {% if user.is_authenticated %}
                     {% if not is_warden %}
                         {% if leave.leave_status != 'PEN' %}
-                            <p>Leave Status: </p>{{ leave.leave_status }}
+                            <ul><li><b>Leave Status: </b>{{ leave.leave_status }}</li></ul>
                         {% else %}
                             <form method="POST">
                                 {% csrf_token %}
@@ -28,7 +35,7 @@
                         {% endif %}
                     {% else %}
                         {% if leave.leave_status != 'APPF' %}
-                            <p>Leave Status: </p>{{ leave.leave_status }}
+                            <ul><li><b>Leave Status: </b>{{ leave.leave_status }}</li></ul>
                         {% else %}
                             <form method="POST">
                                 {% csrf_token %}

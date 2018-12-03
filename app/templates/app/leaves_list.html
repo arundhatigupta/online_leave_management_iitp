@@ -15,10 +15,10 @@
                 {% for leave in leaves %}
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">{{ leave.date_of_leaving }} - {{ leave.date_of_returning }}</h4>
+                            <h4 class="card-title">{{ leave.student.user_account.user.first_name }} {{ leave.student.user_account.user.last_name }}
+                - {{ leave.student.roll_number }}</h4>
                             <p class="card-text">
-                                {{ leave.reason_for_leave }}
-                                {{ leave.going_to_place }}
+                                {{ leave.date_of_leaving }} - {{ leave.date_of_returning }}
                             </p>
                             {% if user.is_authenticated and can_edit and not can_approve %}
                                 <a class="btn btn-primary" href="{% url 'app:leave_edit' pk=leave.pk %}"><span
