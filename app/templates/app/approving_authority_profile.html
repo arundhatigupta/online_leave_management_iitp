@@ -8,7 +8,7 @@
                         <h4>Your profile</h4>
                         <hr>
                     </div>
-                </div>            
+                </div>
                 <div class="row">
                     <div class="col-md-12">
                         <form method="post">
@@ -17,48 +17,48 @@
                                 <label for="username" class="col-4 col-form-label">User Name*</label>
                                 <div class="col-8">
                                     <input id="username" name="username" placeholder="Username"
-                                            class="form-control here" required="required" type="text"
-                                            value="{{ user.username }}" disabled>
+                                           class="form-control here" required="required" type="text"
+                                           value="{{ user.username }}" disabled>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="first_name" class="col-4 col-form-label">First Name</label>
                                 <div class="col-8">
                                     <input id="first_name" name="first_name" placeholder="First Name"
-                                            value="{{ user.first_name }}"
-                                            class="form-control here" type="text">
+                                           value="{{ user.first_name }}"
+                                           class="form-control here" type="text">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="last_name" class="col-4 col-form-label">Last Name</label>
                                 <div class="col-8">
                                     <input id="last_name" name="last_name" placeholder="Last Name"
-                                            value="{{ user.last_name }}"
-                                            class="form-control here" type="text">
+                                           value="{{ user.last_name }}"
+                                           class="form-control here" type="text">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="emp_id" class="col-4 col-form-label">Employee Id</label>
                                 <div class="col-8">
                                     <input id="emp_id" name="emp_id" placeholder="Employee Id"
-                                            value="{{ authority.emp_id }}"
-                                            class="form-control here" type="text" disabled>
+                                           value="{{ authority.emp_id }}"
+                                           class="form-control here" type="text" disabled>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="designation" class="col-4 col-form-label">Designation</label>
                                 <div class="col-8">
                                     <input id="designation" name="designation"
-                                            placeholder="Designation" value="{{ authority.designation }}"
-                                            class="form-control here" type="text" disabled>
+                                           placeholder="Designation" value="{{ authority.designation }}"
+                                           class="form-control here" type="text">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="role" class="col-4 col-form-label">Role</label>
                                 <div class="col-8">
                                     <input id="role" name="role"
-                                            placeholder="Role" value="{{ authority.role }}"
-                                            class="form-control here" type="text" disabled>
+                                           placeholder="Role" value="{{ authority.role }}"
+                                           class="form-control here" type="text" disabled>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -72,6 +72,6 @@
                     </div>
                 </div>
             </div>
-        </div>              
+        </div>
     </div>
 {% endblock %}
