@@ -20,10 +20,12 @@
                                 {{ leave.reason_for_leave }}
                                 {{ leave.going_to_place }}
                             </p>
-                            {% if user.is_authenticated and can_edit %}
-                                <a class="btn btn-primary" href="{% url 'app:leave_edit' pk=leave.pk %}"><span class="glyphicon glyphicon-pencil"> Edit </span></a>
+                            {% if user.is_authenticated and can_edit and not can_approve %}
+                                <a class="btn btn-primary" href="{% url 'app:leave_edit' pk=leave.pk %}"><span
+                                        class="glyphicon glyphicon-pencil"> Edit </span></a>
                             {% endif %}
-                            <a class="btn btn-primary" href="{% url 'app:leave_detail' pk=leave.pk %}"><span class="glyphicon glyphicon-pencil"> Details </span></a>
+                            <a class="btn btn-primary" href="{% url 'app:leave_detail' pk=leave.pk %}"><span
+                                    class="glyphicon glyphicon-pencil"> Details </span></a>
                         </div>
                     </div>
                 {% endfor %}

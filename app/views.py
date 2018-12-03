@@ -89,8 +89,8 @@ def leave_create(request):
         )
         leave.student = request.user.user_account.student
         leave.faculty = \
-        LeaveApprovingFaculty.objects.filter(batch=student.year_of_joining).filter(program=student.program).filter(
-            discipline=student.discipline)[0]
+            LeaveApprovingFaculty.objects.filter(batch=student.year_of_joining).filter(program=student.program).filter(
+                discipline=student.discipline)[0]
         leave.warden = LeaveApprovingWarden.objects.filter(hostel=student.hostel)[0]
         leave.save()
         return redirect('app:leave_detail', pk=leave.pk)
@@ -101,7 +101,27 @@ def leave_create(request):
 
 def leave_detail(request, pk):
     leave = get_object_or_404(Leave, pk=pk)
-    return render(request, 'app/leave_detail.html', {'leave': leave})
+    user_account = request.user.user_account
+    if request.method == "POST":
+        if user_account.user_type == 'AA':
+            if user_account.authority.role == 'FAD':
+                leave.leave_status = request.POST.get('leave_status', '')
+            else:
+                leave.leave_status = request.POST.get('leave_status', '')
+        else:
+            leave.leave_status = 'PEN'
+        leave.save()
+        return redirect('app:dashboard')
+    else:
+        if user_account.user_type == 'S':
+            return render(request, 'app/leave_detail.html', {'leave': leave, 'can_edit': True, 'can_approve': False})
+        else:
+            if user_account.authority.role == 'FAD':
+                return render(request, 'app/leave_detail.html',
+                              {'leave': leave, 'can_edit': False, 'can_approve': True, 'is_warden': False})
+            else:
+                return render(request, 'app/leave_detail.html',
+                              {'leave': leave, 'can_edit': False, 'can_approve': True, 'is_warden': True})
 
 
 def leave_edit(request, pk):
@@ -134,14 +154,14 @@ def leaves_pending(request):
     user_account = request.user.user_account
     if user_account.user_type == 'S':
         leaves = Leave.objects.filter(student=user_account.student).exclude(leave_status="APPW")
-        return render(request, 'app/leaves_list.html', {'leaves': leaves, 'can_edit': True})
+        return render(request, 'app/leaves_list.html', {'leaves': leaves, 'can_edit': True, 'can_approve': False})
     else:
         authority_type = user_account.authority.role
         if authority_type == 'FAD':
             leaves = Leave.objects.filter(faculty=user_account.authority.faculty).filter(leave_status="PEN")
         else:
             leaves = Leave.objects.filter(warden=user_account.authority.warden).filter(leave_status="APPF")
-        return render(request, 'app/leaves_list.html', {'leaves': leaves, 'can_edit': True})
+        return render(request, 'app/leaves_list.html', {'leaves': leaves, 'can_edit': True, 'can_approve': True})
 
 
 def leaves_past(request):

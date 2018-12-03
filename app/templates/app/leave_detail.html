@@ -8,22 +8,40 @@
                 {{ leave.reason_for_leave }}
                 {{ leave.going_to_place }}
             </p>
-            {% if user.is_authenticated and can_edit %}
-                <a class="btn btn-primary" href="{% url 'app:leave_edit' pk=leave.pk %}"><span class="glyphicon glyphicon-pencil"> Edit </span></a>
-            {% endif %}
-            {% if user.is_authenticated and can_approve %}
-                <form method="POST">
-                    {% csrf_token %}
-                    <div class="form-group">
-                        <label for="leave_status">Status</label>
-                        <select class="form-control" value="{{ leave.leave_status }}" id="leave_status" name="leave_status">
-                            <option value="PEN">Pending</option>
-                            <option value="APP">Approved</option>
-                            <option value="REJ">Rejected</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Save</button>
-                </form>
+            {% if user.is_authenticated and not can_approve %}
+                <p>Leave Status: </p>{{ leave.leave_status }}
+            {% else %}
+                {% if user.is_authenticated %}
+                    {% if not is_warden %}
+                        {% if leave.leave_status != 'PEN' %}
+                            <p>Leave Status: </p>{{ leave.leave_status }}
+                        {% else %}
+                            <form method="POST">
+                                {% csrf_token %}
+                                <label for="leave_status">Please select an option:</label>
+                                <select class="form-control" id="leave_status" name="leave_status">
+                                    <option value="APPF">Approve</option>
+                                    <option value="REJ">Reject</option>
+                                </select><br>
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </form>
+                        {% endif %}
+                    {% else %}
+                        {% if leave.leave_status != 'APPF' %}
+                            <p>Leave Status: </p>{{ leave.leave_status }}
+                        {% else %}
+                            <form method="POST">
+                                {% csrf_token %}
+                                <label for="leave_status">Please select an option:</label>
+                                <select class="form-control" id="leave_status" name="leave_status">
+                                    <option value="APPW">Approve</option>
+                                    <option value="REJ">Reject</option>
+                                </select><br>
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </form>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
             {% endif %}
         </div>
     </div>
