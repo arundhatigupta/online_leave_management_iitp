@@ -1,55 +1,86 @@
 {% extends 'app/base.html' %}
 
 {% block body %}
-    <div class="card">
-        <div class="card-body">
-            <h4 class="card-title">{{ leave.student.user_account.user.first_name }} {{ leave.student.user_account.user.last_name }}
-                - {{ leave.student.roll_number }}</h4>
-            <p class="card-text">
-            <ul>
-                <li><b>Reason for Leave: </b>{{ leave.reason_for_leave }}</li>
-                <li><b>Going To: </b>{{ leave.going_to_place }}</li>
-                <li><b>Date of Leaving: </b>{{ leave.date_of_leaving }}</li>
-                <li><b>Date of Returning: </b>{{ leave.date_of_returning }}</li>
-                <li><b>Hostel: </b>{% for k, v in hostel_type.items %}{% if k == leave.student.hostel %}{{ v }}{% endif %}{% endfor %}</li>
-                <li><b>Room Number: </b>{{ leave.student.block }}-{{ leave.student.room_number }}</li>
-            </ul>
-            </p>
-            {% if user.is_authenticated and not can_approve and leave.leave_status != 'PEN' %}
-                <ul><li><b>Leave Status: </b>{% for k, v in leave_status_values.items %}{% if k == leave.leave_status %}{{ v }}{% endif %}{% endfor %}</li></ul>
-            {% else %}
-                {% if user.is_authenticated and can_approve %}
-                    {% if not is_warden %}
-                        {% if leave.leave_status != 'PEN' %}
-                            <ul><li><b>Leave Status: </b>{% for k, v in leave_status_values.items %}{% if k == leave.leave_status %}{{ v }}{% endif %}{% endfor %}</li></ul>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card detail-card">
+                    <div class="card-body">
+                        <div class="card-title">
+                            <b>{{ leave.student.user_account.user.first_name }} {{ leave.student.user_account.user.last_name }}
+                                - {{ leave.student.roll_number }}</b>
+                        </div>
+                        <p class="card-text">
+                        <ul>
+                            <li><b>Reason for Leave: </b>{{ leave.reason_for_leave }}</li>
+                            <li><b>Going To: </b>{{ leave.going_to_place }}</li>
+                            <li><b>Date of Leaving: </b>{{ leave.date_of_leaving }}</li>
+                            <li><b>Date of Returning: </b>{{ leave.date_of_returning }}</li>
+                            <li><b>Hostel: </b>{% for k, v in hostel_type.items %}{% if k == leave.student.hostel %}
+                                {{ v }}{% endif %}{% endfor %}</li>
+                            <li><b>Room Number: </b>{{ leave.student.block }}-{{ leave.student.room_number }}</li>
+                        </ul>
+                        </p>
+                        {% if user.is_authenticated and not can_approve and leave.leave_status != 'PEN' %}
+                            <ul>
+                                <li><b>Leave Status: </b>{% for k, v in leave_status_values.items %}
+                                    {% if k == leave.leave_status %}{{ v }}{% endif %}{% endfor %}</li>
+                            </ul>
                         {% else %}
-                            <form method="POST">
-                                {% csrf_token %}
-                                <label for="leave_status">Please select an option:</label>
-                                <select class="form-control" id="leave_status" name="leave_status">
-                                    <option value="APPF">Approve</option>
-                                    <option value="REJ">Reject</option>
-                                </select><br>
-                                <button type="submit" class="btn btn-primary">Save</button>
-                            </form>
+                            {% if user.is_authenticated and can_approve %}
+                                {% if not is_warden %}
+                                    {% if leave.leave_status != 'PEN' %}
+                                        <ul>
+                                            <li><b>Leave Status: </b>{% for k, v in leave_status_values.items %}
+                                                {% if k == leave.leave_status %}{{ v }}{% endif %}{% endfor %}</li>
+                                        </ul>
+                                    {% else %}
+                                        <form method="POST">
+                                            {% csrf_token %}
+                                            <label for="leave_status">Please select an option:</label>
+                                            <select class="form-control" id="leave_status" name="leave_status">
+                                                <option value="APPF">Approve</option>
+                                                <option value="REJ">Reject</option>
+                                            </select><br>
+                                            <button type="submit" class="btn btn-primary">Save</button>
+                                        </form>
+                                    {% endif %}
+                                {% else %}
+                                    {% if leave.leave_status != 'APPF' %}
+                                        <ul>
+                                            <li><b>Leave Status: </b>{% for k, v in leave_status_values.items %}
+                                                {% if k == leave.leave_status %}{{ v }}{% endif %}{% endfor %}</li>
+                                        </ul>
+                                    {% else %}
+                                        <form method="POST">
+                                            {% csrf_token %}
+                                            <label for="leave_status">Please select an option:</label>
+                                            <select class="form-control" id="leave_status" name="leave_status">
+                                                <option value="APPW">Approve</option>
+                                                <option value="REJ">Reject</option>
+                                            </select><br>
+                                            <button type="submit" class="btn btn-primary">Save</button>
+                                        </form>
+                                    {% endif %}
+                                {% endif %}
+                            {% endif %}
                         {% endif %}
-                    {% else %}
-                        {% if leave.leave_status != 'APPF' %}
-                            <ul><li><b>Leave Status: </b>{% for k, v in leave_status_values.items %}{% if k == leave.leave_status %}{{ v }}{% endif %}{% endfor %}</li></ul>
-                        {% else %}
-                            <form method="POST">
-                                {% csrf_token %}
-                                <label for="leave_status">Please select an option:</label>
-                                <select class="form-control" id="leave_status" name="leave_status">
-                                    <option value="APPW">Approve</option>
-                                    <option value="REJ">Reject</option>
-                                </select><br>
-                                <button type="submit" class="btn btn-primary">Save</button>
-                            </form>
-                        {% endif %}
-                    {% endif %}
-                {% endif %}
-            {% endif %}
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+    <style>
+        .detail-card {
+            position: relative;
+            margin: 24px auto;
+        }
+
+        .edit-btn {
+            right: 20px;
+            bottom: 20px;
+            position: absolute;
+            padding: 12px;
+        }
+    </style>
 {% endblock %}

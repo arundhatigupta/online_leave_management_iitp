@@ -4,6 +4,7 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from app.forms import *
 from app.models import Leave, LeaveApprovingWarden, LeaveApprovingFaculty
+from datetime import datetime
 
 
 def index(request):
@@ -128,12 +129,17 @@ def dashboard(request):
 def leave_create(request):
     student = request.user.user_account.student
     if request.method == "POST":
+        format_str = '%m/%d/%Y'
+        dol_str = request.POST.get('date_of_leaving', '')
+        dor_str = request.POST.get('date_of_returning', '')
+        dol_obj = datetime.strptime(dol_str, format_str)
+        dor_obj = datetime.strptime(dor_str, format_str)
         leave = Leave.objects.create(
             reason_for_leave=request.POST.get('reason_for_leave', ''),
             going_to_place=request.POST.get('going_to_place', ''),
-            going_to_type=request.POST.get('going_to_type', ''),
-            date_of_leaving=request.POST.get('date_of_leaving', ''),
-            date_of_returning=request.POST.get('date_of_returning', ''),
+            going_to_type=request.POST.get('going_type', ''),
+            date_of_leaving=dol_obj.date(),
+            date_of_returning=dor_obj.date()
         )
         leave.student = request.user.user_account.student
         leave.faculty = \
@@ -200,21 +206,13 @@ def leave_edit(request, pk):
         leave.save()
         return redirect('app:leave_detail', pk=leave.pk)
     else:
-        user_account = request.user.user_account
-        if user_account.user_type == 'AA':
-            if user_account.authority.role == 'FAD':
-                form = LeaveForm(leave.__dict__, can_approve=True)
-            else:
-                form = LeaveForm(leave.__dict__, can_approve=True, is_warden=True)
-        else:
-            form = LeaveForm(leave.__dict__, can_approve=False)
-    return render(request, 'app/leave_edit.html', {'form': form})
+        return render(request, 'app/leave_edit.html', {'leave': leave })
 
 
 def leaves_pending(request):
     user_account = request.user.user_account
     if user_account.user_type == 'S':
-        leaves = Leave.objects.filter(student=user_account.student).exclude(leave_status="APPW").order_by("-pk")
+        leaves = Leave.objects.filter(student=user_account.student).exclude(leave_status="APPW").exclude(leave_status="REJ").order_by("-pk")
         return render(request, 'app/leaves_list.html', {'leaves': leaves, 'can_edit': True, 'can_approve': False})
     else:
         authority_type = user_account.authority.role
@@ -228,7 +226,7 @@ def leaves_pending(request):
 def leaves_past(request):
     user_account = request.user.user_account
     if user_account.user_type == 'S':
-        leaves = Leave.objects.filter(student=user_account.student).filter(leave_status="APPW").order_by("-pk")
+        leaves = Leave.objects.filter(student=user_account.student).exclude(leave_status="PEN").exclude(leave_status="APPF").order_by("-pk")
         return render(request, 'app/leaves_list.html', {'leaves': leaves, 'can_edit': False})
     else:
         authority_type = user_account.authority.role

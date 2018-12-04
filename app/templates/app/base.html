@@ -9,10 +9,13 @@
 
     <!-- Loads the path to static files -->
     <link rel="stylesheet" href='{%static "css/bootstrap.min.css" %}'/>
+    <link rel="stylesheet" href='{%static "css/datepicker.css" %}'/>
     <link href='{%static "fonts/satisfy.css" %}' rel="stylesheet" type="text/css"/>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
     <script src='{%static "js/jquery.min.js" %}'></script>
     <script src='{%static "js/popper.min.js" %}'></script>
     <script src='{%static "js/bootstrap.min.js" %}'></script>
+    <script src='{%static "js/bootstrap-datepicker.js" %}'></script>
     {% block extra_head %}{% endblock %}
 </head>
 <body>
@@ -29,5 +32,22 @@
     </nav>
 {% block body %}
 {% endblock %}
+<style>
+    .title-text {
+        margin: 20px 20px 0;
+        font-size: 28px;
+        font-weight: 700;
+    }
+
+    .empty-text{
+        font-size: 60px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        opacity: 0.4;
+        height: 50vh;
+    }
+</style>
 </body>
 </html>

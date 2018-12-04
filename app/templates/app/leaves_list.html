@@ -3,33 +3,96 @@
 {% block body %}
     <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-12 col-md-7">
-                <h3>
+            <div class="col-md-12">
+                <div class='title-text'>
                     {% if can_edit %}
                         Pending
                     {% else %}
                         Past
                     {% endif %}
                     Leaves
-                </h3>
-                {% for leave in leaves %}
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">{{ leave.student.user_account.user.first_name }} {{ leave.student.user_account.user.last_name }}
-                                - {{ leave.student.roll_number }}</h4>
-                            <p class="card-text">
-                                {{ leave.date_of_leaving }} - {{ leave.date_of_returning }}
-                            </p>
-                            {% if user.is_authenticated and can_edit and not can_approve and leave.leave_status != 'APPF' and leave.leave_status != 'APPW' and leave.leave_status != 'REJ' %}
-                                <a class="btn btn-primary" href="{% url 'app:leave_edit' pk=leave.pk %}"><span
-                                        class="glyphicon glyphicon-pencil"> Edit </span></a>
-                            {% endif %}
-                            <a class="btn btn-primary" href="{% url 'app:leave_detail' pk=leave.pk %}"><span
-                                    class="glyphicon glyphicon-pencil"> Details </span></a>
-                        </div>
+                </div>
+                {% if leaves|length > 0 %}
+                    <div class="leaves-container">
+                        {% for leave in leaves %}
+                            <div class="card leave-card">
+                                <div class="card-body">
+                                    <div class="card-title">
+                                        <b>
+                                            {{ leave.student.user_account.user.first_name }} {{ leave.student.user_account.user.last_name }}
+                                            - {{ leave.student.roll_number }}
+                                        </b>
+                                    </div>
+                                    <div class="card-text">
+                                        <b>Date of leaving : </b>{{ leave.date_of_leaving }}
+                                    </div>
+                                    <div class="card-text">
+                                        <b>Date of returning : </b>{{ leave.date_of_returning }}
+                                    </div>
+                                    <div class="card-text">
+                                        <b>Reason : </b>{{ leave.reason_for_leave }}
+                                    </div>
+                                    <div class="card-text">
+                                        <b>Going to : </b>{{ leave.going_to_place }}
+                                    </div>
+                                    {% if not can_edit %}
+                                        <div class="card-text">
+                                            <b>Leave status : </b>{{ leave.leave_status }}
+                                        </div>
+                                    {% endif %}
+                                    {% if user.is_authenticated and can_edit and not can_approve and leave.leave_status != 'APPF' and leave.leave_status != 'APPW' and leave.leave_status != 'REJ' %}
+                                        <a class="btn btn-primary edit-btn"
+                                           href="{% url 'app:leave_edit' pk=leave.pk %}">
+                                            <i class="icon-pencil icon-large"></i>
+                                        </a>
+                                    {% endif %}
+                                    <a class="btn btn-primary details-btn"
+                                       href="{% url 'app:leave_detail' pk=leave.pk %}">
+                                        <i class="icon-list icon-large"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
                     </div>
-                {% endfor %}
+                {% else %}
+                    <div class="empty-text">
+                        No{% if can_edit %}
+                        pending
+                    {% else %}
+                        past
+                    {% endif %}
+                        leaves
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>
+    <style>
+        .leave-card {
+            height: 300px;
+            width: 300px;
+            position: relative;
+            margin: 16px;
+        }
+
+        .edit-btn {
+            right: 20px;
+            bottom: 20px;
+            position: absolute;
+            padding: 12px;
+        }
+
+        .details-btn {
+            position: absolute;
+            right: 68px;
+            bottom: 20px;
+            padding: 12px;
+        }
+
+        .leaves-container {
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+        }
+    </style>
 {% endblock %}

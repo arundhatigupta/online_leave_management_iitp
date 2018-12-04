@@ -2,33 +2,56 @@
 
 {% block body %}
     <div class="container-fluid">
-
         <div class="row">
-
-            <div class="col-sm-12 col-md-7">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <h3>Apply for a Leave</h3>
+            <div class="col-md-6 form-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class='title-text' style="margin: 12px 0;">Apply for Leave</div>
                         {% if error_message %}
                             <p><strong>{{ error_message }}</strong></p>
                         {% endif %}
-                        <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+                        <form action="" method="post"  enctype="multipart/form-data">
                             {% csrf_token %}
-                            {{ form.as_p }}
                             <div class="form-group">
-                                <div class="col-sm-offset-2 col-sm-10">
-                                    <button type="submit" class="btn btn-success">Submit</button>
-                                </div>
+                                <label for="reason_for_leave">Reason</label>
+                                <input type="text" rows="5" name='reason_for_leave' class="form-control" id="reason_for_leave" >
+                            </div>
+                            <div class="form-group">
+                                <label for="going_to_place">Going to Place</label>
+                                <input type="text" class="form-control" name='going_to_place' id="going_to_place" >
+                            </div>
+                            <div class="form-group">
+                                <label for="going_type">Place type</label>
+                                <select name="going_to_type" class="custom-select" >
+                                        <option value="NAT" selected >Native</option>
+                                        <option value="OTH">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="date_of_leaving">Date of leaving</label>
+                                <input class="form-control" id="date_of_leaving" name="date_of_leaving" placeholder="MM/DD/YYYY" type="text"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="date_of_returning">Date of returning</label>
+                                <input class="form-control" id="date_of_returning" name="date_of_returning" placeholder="MM/DD/YYYY" type="text"/>
+                            </div>
+                            <div class="form-group" style="text-align: center;">
+                                <button type="submit" class="btn btn-success">Submit</button>
+                            </div>
                             </div>
                         </form>
-
                     </div>
-
                 </div>
-
             </div>
-
         </div>
-
     </div>
+    <style>
+        .form-card {
+            margin: 24px auto;
+        }
+    </style>
+    <script>
+        $('#date_of_leaving').datepicker();
+        $('#date_of_returning').datepicker();
+    </script>
 {% endblock %}
