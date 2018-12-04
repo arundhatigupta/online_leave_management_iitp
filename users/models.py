@@ -57,8 +57,8 @@ class GenderType(enum.Enum):
 
 
 class HostelType(enum.Enum):
-    GH = 'Girls Hostel'
     BH = 'Boys Hostel'
+    GH = 'Girls Hostel'
 
 
 # models
