@@ -8,7 +8,6 @@ from users.models import ApprovingAuthority, Student, UserAccount
 
 def signup(request):
     if request.method == "POST":
-        print(request.POST)
         password = request.POST.get('password', '')
         re_enter_password = request.POST.get('re_enter_password', '')
         user_type = request.POST.get('user_type', '')
@@ -17,9 +16,11 @@ def signup(request):
             username = request.POST.get('username')
             first_name = request.POST.get('first_name')
             last_name = request.POST.get('last_name')
+            email = request.POST.get('email')
             user = User.objects.create_user(username, password=password)
             user.first_name = first_name
             user.last_name = last_name
+            user.email = email
             user.save()
             user_account = UserAccount.objects.create(
                 user=user,
@@ -27,7 +28,6 @@ def signup(request):
             )
             user_account.save()
             if user_type == 'S':
-                print(request.POST)
                 roll_number = request.POST.get('roll_number')
                 year_of_joining = request.POST.get('year_of_joining')
                 program = request.POST.get('program_type')

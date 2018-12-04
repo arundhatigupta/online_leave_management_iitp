@@ -6,12 +6,13 @@
             <div class="col-md-8">
                 <div class="card detail-card">
                     <div class="card-body">
-                        <div class="card-title">
+                        <div class="card-title" style="font-size: 24px;">
                             <b>{{ leave.student.user_account.user.first_name }} {{ leave.student.user_account.user.last_name }}
                                 - {{ leave.student.roll_number }}</b>
                         </div>
                         <p class="card-text">
                         <ul>
+                            <li><b>Email: </b>{{ leave.student.user_account.user.email }}</li>
                             <li><b>Reason for Leave: </b>{{ leave.reason_for_leave }}</li>
                             <li><b>Going To: </b>{{ leave.going_to_place }}</li>
                             <li><b>Date of Leaving: </b>{{ leave.date_of_leaving }}</li>
@@ -19,6 +20,7 @@
                             <li><b>Hostel: </b>{% for k, v in hostel_type.items %}{% if k == leave.student.hostel %}
                                 {{ v }}{% endif %}{% endfor %}</li>
                             <li><b>Room Number: </b>{{ leave.student.block }}-{{ leave.student.room_number }}</li>
+                            <li><b>Email: </b>{{ leave.student.user_account.user.email }}</li>
                         </ul>
                         </p>
                         {% if user.is_authenticated and not can_approve and leave.leave_status != 'PEN' %}
@@ -74,13 +76,6 @@
         .detail-card {
             position: relative;
             margin: 24px auto;
-        }
-
-        .edit-btn {
-            right: 20px;
-            bottom: 20px;
-            position: absolute;
-            padding: 12px;
         }
     </style>
 {% endblock %}

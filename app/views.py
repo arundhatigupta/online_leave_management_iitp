@@ -63,11 +63,10 @@ def profile(request):
                 user.save()
 
                 student.current_year = request.POST.get('current_year', '')
-                student.program = request.POST.get('program', '')
-                student.discipline = request.POST.get('discipline', '')
                 student.block = request.POST.get('block', '')
                 student.room_number = request.POST.get('room_number', '')
                 student.save()
+                context['message'] = 'Your profile has been successfully saved!'
             return render(request, 'app/student_profile.html', context)
 
         elif user_account.user_type == 'AA':
@@ -91,10 +90,7 @@ def profile(request):
                 user.first_name = request.POST.get('first_name', '')
                 user.last_name = request.POST.get('last_name', '')
                 user.save()
-
-                # authority.designation = request.POST.get('designation', '')
-                # authority.role = request.POST.get('role', '')
-                # authority.save()
+                context['message'] = 'Your profile has been successfully saved!'
 
             return render(request, 'app/approving_authority_profile.html', context)
     except:
@@ -102,19 +98,24 @@ def profile(request):
 
 
 def change_password(request):
+    message = ''
     if request.method == 'POST':
         form = PasswordChangeForm(request.user, request.POST)
         if form.is_valid():
             user = form.save()
             update_session_auth_hash(request, user)
-            messages.success(request, 'Your password was successfully updated!')
-            return redirect('/profile')
+            message = 'Your password was successfully updated!'
+            return render(request, 'app/change_password.html', {
+                'form': form,
+                'message': message
+            })
         else:
-            messages.error(request, 'Please correct the error below.')
+            message = 'Please enter valid credentials'
     else:
         form = PasswordChangeForm(request.user)
     return render(request, 'app/change_password.html', {
-        'form': form
+        'form': form,
+        'message': message
     })
 
 
@@ -211,28 +212,46 @@ def leave_edit(request, pk):
 
 def leaves_pending(request):
     user_account = request.user.user_account
+    leave_status_values = {
+        'PEN': 'Pending',
+        'APPF': 'Approved by Faculty',
+        'APPW': 'Approved by Warden',
+        'REJ': "Rejected",
+    }
     if user_account.user_type == 'S':
         leaves = Leave.objects.filter(student=user_account.student).exclude(leave_status="APPW").exclude(leave_status="REJ").order_by("-pk")
-        return render(request, 'app/leaves_list.html', {'leaves': leaves, 'can_edit': True, 'can_approve': False})
+        return render(request, 'app/leaves_list.html', {'leaves': leaves, 'can_edit': True, 'can_approve': False, 'leave_status_values': leave_status_values})
     else:
         authority_type = user_account.authority.role
-        if authority_type == 'FAD':
-            leaves = Leave.objects.filter(faculty=user_account.authority.faculty).filter(leave_status="PEN").order_by("-pk")
-        else:
-            leaves = Leave.objects.filter(warden=user_account.authority.warden).filter(leave_status="APPF").order_by("-pk")
-        return render(request, 'app/leaves_list.html', {'leaves': leaves, 'can_edit': True, 'can_approve': True})
+        try:
+            if authority_type == 'FAD':
+                leaves = Leave.objects.filter(faculty=user_account.authority.faculty).filter(leave_status="PEN").order_by("-pk")
+            else:
+                leaves = Leave.objects.filter(warden=user_account.authority.warden).filter(leave_status="APPF").order_by("-pk")
+        except:
+            leaves = []
+        return render(request, 'app/leaves_list.html', {'leaves': leaves, 'can_edit': True, 'can_approve': True, 'leave_status_values': leave_status_values})
 
 
 def leaves_past(request):
     user_account = request.user.user_account
+    leave_status_values = {
+        'PEN': 'Pending',
+        'APPF': 'Approved by Faculty',
+        'APPW': 'Approved by Warden',
+        'REJ': "Rejected",
+    }
     if user_account.user_type == 'S':
         leaves = Leave.objects.filter(student=user_account.student).exclude(leave_status="PEN").exclude(leave_status="APPF").order_by("-pk")
-        return render(request, 'app/leaves_list.html', {'leaves': leaves, 'can_edit': False})
+        return render(request, 'app/leaves_list.html', {'leaves': leaves, 'can_edit': False, 'leave_status_values': leave_status_values,})
     else:
         authority_type = user_account.authority.role
-        if authority_type == 'FAD':
-            leaves = Leave.objects.filter(faculty=user_account.authority.faculty).exclude(leave_status="PEN").order_by("-pk")
-        else:
-            leaves = Leave.objects.filter(warden=user_account.authority.warden).exclude(
-                leave_status="PEN").exclude(leave_status="APPF").order_by("-pk")
-        return render(request, 'app/leaves_list.html', {'leaves': leaves, 'can_edit': False})
+        try:
+            if authority_type == 'FAD':
+                leaves = Leave.objects.filter(faculty=user_account.authority.faculty).exclude(leave_status="PEN").order_by("-pk")
+            else:
+                leaves = Leave.objects.filter(warden=user_account.authority.warden).exclude(
+                    leave_status="PEN").exclude(leave_status="APPF").order_by("-pk")
+        except:
+            leaves = []
+        return render(request, 'app/leaves_list.html', {'leaves': leaves, 'can_edit': False, 'leave_status_values': leave_status_values})

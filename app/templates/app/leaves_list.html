@@ -17,29 +17,28 @@
                         {% for leave in leaves %}
                             <div class="card leave-card">
                                 <div class="card-body">
-                                    <div class="card-title">
+                                        <div class="card-title" style="font-size: 20px;">
                                         <b>
                                             {{ leave.student.user_account.user.first_name }} {{ leave.student.user_account.user.last_name }}
                                             - {{ leave.student.roll_number }}
                                         </b>
                                     </div>
                                     <div class="card-text">
-                                        <b>Date of leaving : </b>{{ leave.date_of_leaving }}
+                                        <b>Date of leaving: </b>{{ leave.date_of_leaving }}
                                     </div>
                                     <div class="card-text">
-                                        <b>Date of returning : </b>{{ leave.date_of_returning }}
+                                        <b>Date of returning: </b>{{ leave.date_of_returning }}
                                     </div>
                                     <div class="card-text">
-                                        <b>Reason : </b>{{ leave.reason_for_leave }}
+                                        <b>Reason: </b>{{ leave.reason_for_leave }}
                                     </div>
                                     <div class="card-text">
-                                        <b>Going to : </b>{{ leave.going_to_place }}
+                                        <b>Going to: </b>{{ leave.going_to_place }}
                                     </div>
-                                    {% if not can_edit %}
-                                        <div class="card-text">
-                                            <b>Leave status : </b>{{ leave.leave_status }}
-                                        </div>
-                                    {% endif %}
+                                    <div class="card-text">
+                                        <b>Leave Status: </b>{% for k, v in leave_status_values.items %}
+                                                {% if k == leave.leave_status %}{{ v }}{% endif %}{% endfor %}
+                                    </div>
                                     {% if user.is_authenticated and can_edit and not can_approve and leave.leave_status != 'APPF' and leave.leave_status != 'APPW' and leave.leave_status != 'REJ' %}
                                         <a class="btn btn-primary edit-btn"
                                            href="{% url 'app:leave_edit' pk=leave.pk %}">
@@ -69,14 +68,14 @@
     </div>
     <style>
         .leave-card {
-            height: 300px;
-            width: 300px;
+            height: 325px;
+            width: 325px;
             position: relative;
             margin: 16px;
         }
 
         .edit-btn {
-            right: 20px;
+            right: 70px;
             bottom: 20px;
             position: absolute;
             padding: 12px;
@@ -84,7 +83,7 @@
 
         .details-btn {
             position: absolute;
-            right: 68px;
+            right: 20px;
             bottom: 20px;
             padding: 12px;
         }

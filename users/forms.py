@@ -10,6 +10,7 @@ class SignUpForm(forms.Form):
                  UserAccountType]
     )
     username = forms.CharField(label=False, widget=forms.TextInput(attrs={'placeholder': 'Username'}))
+    email = forms.CharField(label=False, widget=forms.TextInput(attrs={'placeholder': 'Email'}))
     roll_number = forms.CharField(label=False, widget=forms.TextInput(attrs={'placeholder': 'Roll no'}))
     year_of_joining = forms.IntegerField(label=False, widget=forms.TextInput(attrs={'placeholder': 'Year of Joining'}))
     program_type = forms.MultipleChoiceField(
