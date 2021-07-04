@@ -25,7 +25,8 @@ $ git remote add upstream https://github.com/NJACKWinterOfCode/online_leave_mana
     ```
     - Now, activate the virtual environment.
     ```
-    $ source venv/bin/activate
+    $ source venv/bin/activate          (for Linux/Mac Environment)
+    $ venv\Scripts\activate             (for Windows Environment)
     ```
     - Finally, use the following command to install the requirements for the project (specified in the requirements.txt file):
     ```
